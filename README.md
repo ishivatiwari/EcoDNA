@@ -1,3 +1,21 @@
+<p align="center">
+  <img src="assets/ecodna_banner.png" width="100%">
+</p>
+
+# 🌍 EcoDNA: Your Personal Sustainability Assistant
+
+<p align="center">
+
+[![Demo](https://img.shields.io/badge/🚀_DEMO-LIVE_NOW-orange?style=for-the-badge)](https://your-demo-url.com)
+[![Project](https://img.shields.io/badge/GitHub-PROJECT-darkgrey?style=for-the-badge&logo=github)](https://github.com/username/EcoDNA)
+[![Repository](https://img.shields.io/badge/SOURCE-CODE-green?style=for-the-badge)](https://github.com/username/EcoDNA)
+
+</p>
+
+<h3 align="center">
+Empowering individuals with AI-driven, personalized, and actionable insights to understand, track, and reduce their carbon footprint.
+</h3>
+
 # 🌍 EcoDNA
 
 **EcoDNA** is an intelligent, context-aware sustainability assistant that helps individuals understand, track, and reduce their carbon footprint through personalized insights and simple, high-impact actions. By transforming everyday lifestyle habits into measurable environmental impact, EcoDNA empowers users to make smarter and greener decisions.
