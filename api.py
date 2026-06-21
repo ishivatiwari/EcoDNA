@@ -231,6 +231,7 @@ async def analyze_habits(habits: UserHabits, request: Request) -> AnalysisRespon
 
 # ── Frontend static file serving ─────────────
 _frontend_dist = os.path.join(os.path.dirname(__file__), "frontend", "dist")
+_frontend_assets = os.path.join(_frontend_dist, "assets")
 
 
 @app.get("/", tags=["Frontend"])
@@ -244,9 +245,29 @@ async def serve_frontend() -> Response:
     )
 
 
-if os.path.exists(_frontend_dist):
+@app.get("/{file_path:path}", tags=["Frontend"])
+async def serve_static(file_path: str) -> Response:
+    """Serve any remaining static file from the dist root (e.g. vite.svg).
+
+    Falls back to index.html for unknown paths so client-side routing works.
+    """
+    full_path = os.path.join(_frontend_dist, file_path)
+    if os.path.isfile(full_path):
+        return FileResponse(full_path)
+    # Fall back to index.html for SPA client-side routes
+    index_path = os.path.join(_frontend_dist, "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    return JSONResponse(status_code=404, content={"detail": "Not found"})
+
+
+# Mount dist/assets/ directory at /assets so Vite-built CSS/JS loads correctly.
+# Vite outputs: dist/assets/index-*.css and dist/assets/index-*.js
+# The HTML references them as /assets/..., so the directory must be dist/assets/.
+if os.path.exists(_frontend_assets):
     app.mount(
         "/assets",
-        StaticFiles(directory=_frontend_dist),
+        StaticFiles(directory=_frontend_assets),
         name="static",
     )
+
