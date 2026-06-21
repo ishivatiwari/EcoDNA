@@ -6,9 +6,19 @@ __pycache__/
 venv/
 env/
 .env
+*.egg-info/
+dist/
+build/
+.pytest_cache/
 
 # Node
 node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # OS
 .DS_Store

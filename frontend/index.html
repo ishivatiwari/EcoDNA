@@ -4,14 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoDNA Assistant</title>
+    <meta name="description" content="EcoDNA — an AI-powered personal sustainability assistant that analyses your lifestyle habits, calculates your carbon footprint, and delivers personalised actions to reduce your environmental impact." />
+    <title>EcoDNA — Personal AI Sustainability Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
-    <div class="background-blobs">
+    <!-- Skip to main content link for keyboard / screen-reader users -->
+    <a href="#mainContent" class="skip-to-content">Skip to main content</a>
+
+    <div class="background-blobs" aria-hidden="true">
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
     </div>
@@ -22,14 +26,16 @@
         <p>Your Personal AI Sustainability Assistant</p>
       </header>
 
-      <main class="dashboard">
+      <main id="mainContent" class="dashboard">
         <!-- Input Form -->
         <section class="glass-card form-section" aria-label="Lifestyle Data Input">
           <h2>Lifestyle Data</h2>
-          <form id="ecoForm">
+          <form id="ecoForm" aria-describedby="formDescription">
+            <p id="formDescription" class="sr-only">Enter your daily lifestyle habits to calculate your carbon footprint.</p>
+
             <div class="form-group">
               <label for="transportMode">Transport Mode</label>
-              <select id="transportMode" required>
+              <select id="transportMode" required aria-required="true">
                 <option value="Car">Car</option>
                 <option value="Bike">Motorbike</option>
                 <option value="Public Transport">Public Transport</option>
@@ -39,12 +45,12 @@
             
             <div class="form-group">
               <label for="transportDist">Daily Commute (km)</label>
-              <input type="number" id="transportDist" value="15" min="0" step="0.1" required>
+              <input type="number" id="transportDist" value="15" min="0" max="500" step="0.1" required aria-required="true">
             </div>
 
             <div class="form-group">
               <label for="foodPref">Food Preference</label>
-              <select id="foodPref" required>
+              <select id="foodPref" required aria-required="true">
                 <option value="Vegan">Vegan</option>
                 <option value="Vegetarian">Vegetarian</option>
                 <option value="Mixed">Mixed</option>
@@ -54,12 +60,25 @@
 
             <div class="form-group">
               <label for="hoursAC">Daily AC Usage (hours)</label>
-              <input type="number" id="hoursAC" value="4" min="0" step="0.5" required>
+              <input type="number" id="hoursAC" value="4" min="0" max="24" step="0.5" required aria-required="true">
+            </div>
+
+            <div class="form-group">
+              <label for="waterUsage">Daily Water Usage (litres)</label>
+              <input type="number" id="waterUsage" value="150" min="0" max="2000" step="1" required aria-required="true">
+            </div>
+
+            <div class="form-group">
+              <label for="homeType">Home Type</label>
+              <select id="homeType" required aria-required="true">
+                <option value="Apartment">Apartment</option>
+                <option value="Independent House">Independent House</option>
+              </select>
             </div>
 
             <div class="form-group">
               <label for="shoppingLevel">Shopping Frequency</label>
-              <select id="shoppingLevel" required>
+              <select id="shoppingLevel" required aria-required="true">
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
@@ -81,17 +100,17 @@
 
         <!-- Results & Agent Section -->
         <div class="results-layout">
-          <section class="glass-card results-section" id="resultsSection" aria-live="polite">
-            <div class="results-placeholder">
-              <div class="agent-avatar pulse">🤖</div>
+          <section class="glass-card results-section" id="resultsSection" aria-label="Analysis Results" aria-live="polite">
+            <div class="results-placeholder" id="resultsPlaceholder">
+              <div class="agent-avatar pulse" aria-hidden="true">🤖</div>
               <p>Hi! I'm EcoDNA. Enter your daily habits and I'll calculate your carbon footprint and help you track your sustainability goals!</p>
             </div>
             
             <div class="results-content hidden" id="resultsContent">
               <div class="score-container">
-                <div class="score-circle">
-                  <h2 id="carbonScore">0</h2>
-                  <span>Score</span>
+                <div class="score-circle" role="img" aria-label="Carbon sustainability score">
+                  <span class="score-value" id="carbonScore">0</span>
+                  <span class="score-label">Score</span>
                 </div>
                 <div class="score-details">
                   <h3>Total Daily CO₂</h3>
@@ -101,9 +120,9 @@
 
               <!-- Agent Chat Bubble -->
               <div class="agent-chat">
-                <div class="agent-avatar">🤖</div>
-                <div class="chat-bubble">
-                  <div id="typingIndicator" class="hidden">
+                <div class="agent-avatar" aria-hidden="true">🤖</div>
+                <div class="chat-bubble" role="log" aria-label="Agent insight message">
+                  <div id="typingIndicator" class="hidden" aria-label="Agent is typing">
                     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
                   </div>
                   <p id="insightText"></p>
@@ -112,28 +131,32 @@
 
               <div class="breakdown">
                 <h3>Footprint Breakdown</h3>
-                <ul id="breakdownList"></ul>
+                <ul id="breakdownList" aria-label="Emissions by category"></ul>
               </div>
 
               <div class="recommendations">
                 <h3>Suggested Goals</h3>
-                <ul id="recommendationsList" class="interactive-list"></ul>
+                <ul id="recommendationsList" class="interactive-list" aria-label="Personalised recommendations"></ul>
               </div>
             </div>
           </section>
 
           <!-- Progress Tracking Panel -->
-          <section class="glass-card goals-section">
+          <section class="glass-card goals-section" aria-label="Goal tracking">
             <div class="goals-header">
               <h2>My Goals</h2>
-              <span class="badge" id="goalCount">0 Active</span>
+              <span class="badge" id="goalCount" aria-live="polite">0 Active</span>
             </div>
-            <div id="activeGoalsList" class="active-goals">
+            <div id="activeGoalsList" class="active-goals" role="list" aria-label="Active sustainability goals">
               <p class="empty-state">No goals tracked yet. Click a suggestion to start tracking!</p>
             </div>
           </section>
         </div>
       </main>
+
+      <footer role="contentinfo">
+        <p>EcoDNA &copy; 2025 — Built for a greener planet 🌍 | <a href="https://github.com" aria-label="Visit project on GitHub">GitHub</a></p>
+      </footer>
     </div>
     <script type="module" src="./main.js"></script>
   </body>
