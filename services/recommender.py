@@ -7,7 +7,6 @@ monthly CO2 savings so the highest-impact actions appear first.
 """
 
 import logging
-from typing import List
 
 from models.user import (
     UserHabits,
@@ -42,7 +41,7 @@ class RecommendationEngine:
     @staticmethod
     def generate_recommendations(
         habits: UserHabits, footprint: FootprintBreakdown
-    ) -> List[Recommendation]:
+    ) -> list[Recommendation]:
         """Generate personalised recommendations based on habits and footprint.
 
         Rules are evaluated independently for each category:
@@ -58,7 +57,7 @@ class RecommendationEngine:
             A list of Recommendation objects sorted by descending
             estimated monthly impact.
         """
-        recommendations: List[Recommendation] = []
+        recommendations: list[Recommendation] = []
         total = footprint.total_co2
 
         if total == 0:

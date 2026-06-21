@@ -4,6 +4,12 @@ Provides domain-specific exceptions for clearer error handling
 and more informative error messages throughout the system.
 """
 
+__all__ = [
+    "EcoDNAError",
+    "GoalNotFoundError",
+    "InvalidHabitDataError",
+]
+
 
 class EcoDNAError(Exception):
     """Base exception for all EcoDNA-related errors."""

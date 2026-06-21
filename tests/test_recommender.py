@@ -112,7 +112,13 @@ def test_recommender_sorted_by_impact(high_emission_habits):
 
 
 def test_recommender_zero_emissions():
-    """Zero total emissions should produce no recommendations."""
+    """Zero total emissions should produce no recommendations.
+
+    Constructs a FootprintBreakdown directly with all-zero values
+    to guarantee the zero-emissions code path is exercised.
+    """
+    from models.user import FootprintBreakdown
+
     habits = UserHabits(
         transport=TransportHabits(mode=TransportMode.WALKING, distance_km_per_day=0.0),
         electricity=ElectricityHabits(),
@@ -123,10 +129,18 @@ def test_recommender_zero_emissions():
         home_type=HomeType.APARTMENT,
     )
 
-    footprint = CarbonCalculatorService.calculate_daily_footprint(habits)
+    # Force a truly zero footprint to test the branch
+    zero_footprint = FootprintBreakdown(
+        transport_co2=0.0,
+        electricity_co2=0.0,
+        food_co2=0.0,
+        shopping_co2=0.0,
+        waste_co2=0.0,
+        water_co2=0.0,
+        total_co2=0.0,
+        carbon_score=100.0,
+    )
 
-    # If total is zero (food + shopping still contribute, so unlikely to be 0)
-    # but we test the branch
-    if footprint.total_co2 == 0:
-        recs = RecommendationEngine.generate_recommendations(habits, footprint)
-        assert len(recs) == 0
+    recs = RecommendationEngine.generate_recommendations(habits, zero_footprint)
+    assert recs == []
+

@@ -6,8 +6,6 @@ Produces a sustainability score normalised to a 0-100 scale.
 """
 
 import logging
-from functools import lru_cache
-from typing import Tuple
 
 from models.user import UserHabits, FootprintBreakdown
 from utils.emission_factors import (

@@ -6,7 +6,6 @@ goal progress, and recommended actions.
 """
 
 import logging
-from typing import List
 
 from models.user import Goal, FootprintBreakdown, Recommendation
 
@@ -22,7 +21,7 @@ class InsightGenerator:
 
     @staticmethod
     def generate_weekly_insight(
-        footprint: FootprintBreakdown, goals: List[Goal]
+        footprint: FootprintBreakdown, goals: list[Goal]
     ) -> str:
         """Generate a narrative weekly sustainability insight.
 
@@ -93,7 +92,7 @@ class MotivationAssistant:
     """Provides motivational messages to encourage sustainable habits."""
 
     @staticmethod
-    def get_motivation_message(recommendations: List[Recommendation]) -> str:
+    def get_motivation_message(recommendations: list[Recommendation]) -> str:
         """Generate a motivational tip based on the top recommendation.
 
         Args:

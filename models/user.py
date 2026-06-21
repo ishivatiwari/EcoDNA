@@ -6,9 +6,25 @@ All numeric inputs are constrained to sensible ranges to prevent
 erroneous or malicious data from propagating through the system.
 """
 
+from __future__ import annotations
+
 from enum import Enum
-from typing import List, Optional
+
 from pydantic import BaseModel, Field, computed_field
+
+__all__ = [
+    "TransportMode",
+    "FoodPreference",
+    "ConsumptionLevel",
+    "HomeType",
+    "TransportHabits",
+    "ElectricityHabits",
+    "WasteHabits",
+    "UserHabits",
+    "FootprintBreakdown",
+    "Goal",
+    "Recommendation",
+]
 
 
 class TransportMode(str, Enum):

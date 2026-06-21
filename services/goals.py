@@ -7,7 +7,6 @@ that may need renewed attention.
 
 import logging
 import uuid
-from typing import Dict, List
 
 from models.user import Goal
 from utils.exceptions import GoalNotFoundError
@@ -27,7 +26,7 @@ class GoalPlanner:
 
     def __init__(self) -> None:
         """Initialise an empty goal planner."""
-        self.goals: Dict[str, Goal] = {}
+        self.goals: dict[str, Goal] = {}
 
     def add_goal(
         self,
@@ -88,7 +87,7 @@ class GoalPlanner:
 
         return goal
 
-    def get_all_goals(self) -> List[Goal]:
+    def get_all_goals(self) -> list[Goal]:
         """Retrieve all registered goals.
 
         Returns:
@@ -96,7 +95,7 @@ class GoalPlanner:
         """
         return list(self.goals.values())
 
-    def get_stagnant_goals(self) -> List[Goal]:
+    def get_stagnant_goals(self) -> list[Goal]:
         """Identify goals with little or no progress.
 
         A goal is considered stagnant if it is not completed and
